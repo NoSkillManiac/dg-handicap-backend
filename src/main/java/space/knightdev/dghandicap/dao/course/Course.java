@@ -1,4 +1,4 @@
-package space.knightdev.dghandicap.dao;
+package space.knightdev.dghandicap.dao.course;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class Rounds {
+public class Course {
     @Id
     @NonNull
-    private UUID roundId;
-    private long date;
     private UUID courseId;
-    private List<UUID> players;
+    private String name;
+    private List<CourseLayout> layout;
 }

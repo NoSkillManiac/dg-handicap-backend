@@ -6,5 +6,5 @@ import lombok.Data;
 public class CourseLayout {
     private int layoutId;
     private String name;
-    private int ssa;
+    private double ssa;
 }

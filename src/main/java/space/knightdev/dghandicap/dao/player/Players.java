@@ -1,9 +1,10 @@
-package space.knightdev.dghandicap.dao;
+package space.knightdev.dghandicap.dao.player;
 
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -16,5 +17,5 @@ public class Players {
     private int pdga;
     private String uDiscName;
     private String alias;
-    private int handicap;
+    private List<PlayerHandicap> handicap;
 }
