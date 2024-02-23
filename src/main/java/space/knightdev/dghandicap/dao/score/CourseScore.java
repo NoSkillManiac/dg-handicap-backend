@@ -10,6 +10,6 @@ import java.util.UUID;
 public class CourseScore {
     @NonNull
     private UUID courseId;
-    private int layoutId;
+    private Integer layoutId;
     private List<RoundScore> roundScores;
 }

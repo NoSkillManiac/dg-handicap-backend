@@ -14,6 +14,6 @@ public class Round {
     private UUID roundId;
     private long date;
     private UUID courseId;
-    private int layoutId;
+    private Integer layoutId;
     private List<UUID> players;
 }

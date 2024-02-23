@@ -14,7 +14,7 @@ public class Players {
     private UUID playerId;
     private String firstName;
     private String lastName;
-    private int pdga;
+    private Integer pdga;
     private String uDiscName;
     private String alias;
     private List<PlayerHandicap> handicap;

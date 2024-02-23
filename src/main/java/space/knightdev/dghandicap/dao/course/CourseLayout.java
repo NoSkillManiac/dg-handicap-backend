@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CourseLayout {
-    private int layoutId;
+    private Integer layoutId;
     private String name;
-    private double ssa;
+    private Double ssa;
 }

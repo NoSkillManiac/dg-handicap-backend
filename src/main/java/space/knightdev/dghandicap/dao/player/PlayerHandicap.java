@@ -7,6 +7,6 @@ import java.util.UUID;
 @Data
 public class PlayerHandicap {
     private UUID courseId;
-    private int layoutId;
-    private int handicap;
+    private Integer layoutId;
+    private Double handicap;
 }

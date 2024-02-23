@@ -10,5 +10,5 @@ public interface CourseService {
     Course upsertCourse(final Course course);
     Course removeCourse(final UUID courseId);
     Course upsertLayout(final UUID courseId, final CourseLayout layout);
-    Course removeLayout(final UUID courseId, final int layoutId);
+    Course removeLayout(final UUID courseId, final Integer layoutId);
 }

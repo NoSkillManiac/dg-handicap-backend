@@ -9,5 +9,5 @@ import java.util.UUID;
 public class RoundScore {
     @NonNull
     private UUID roundId;
-    private int score;
+    private Integer score;
 }

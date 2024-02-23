@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class RoundScores {
+public class RoundDetail {
     private UUID courseId;
-    private int layoutId;
+    private Integer layoutId;
     private List<RoundPlayers> players;
 }
