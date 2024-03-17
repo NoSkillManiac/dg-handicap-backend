@@ -1,16 +1,18 @@
 package space.knightdev.dghandicap.dao.player;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Builder
+@Document("players")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Players {
     @Id
-    @NonNull
     private UUID playerId;
     private String firstName;
     private String lastName;

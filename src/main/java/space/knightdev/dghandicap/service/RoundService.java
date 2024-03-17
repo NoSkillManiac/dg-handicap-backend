@@ -13,7 +13,7 @@ public interface RoundService {
 
     Round updateRound(final RoundDetail roundDetail);
 
-    RoundDetail getRound(final UUID roundId);
+    Round getRound(final UUID roundId);
 
     List<Round> getRounds(final UUID courseId, final Integer layoutId);
 

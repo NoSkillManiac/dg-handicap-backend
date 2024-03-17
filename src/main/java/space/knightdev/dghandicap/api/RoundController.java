@@ -32,7 +32,7 @@ public class RoundController {
     }
 
     @GetMapping("/round/{roundId}")
-    public RoundDetail getRound(@PathVariable("roundId") final UUID roundId) {
+    public Round getRound(@PathVariable("roundId") final UUID roundId) {
         return roundService.getRound(roundId);
     }
 

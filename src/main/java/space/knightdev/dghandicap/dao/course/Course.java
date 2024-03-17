@@ -1,17 +1,23 @@
 package space.knightdev.dghandicap.dao.course;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Builder
+@Document("course")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
     @Id
-    @NonNull
-    private UUID courseId;
+    private UUID courseId = UUID.randomUUID();
     private String name;
     private List<CourseLayout> layout;
 }
