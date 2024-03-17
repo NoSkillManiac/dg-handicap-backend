@@ -1,13 +1,14 @@
 package space.knightdev.dghandicap.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 import java.util.UUID;
 
 @Data
-public class RoundDetail {
+public class CoursePlayerRound {
+    private String uDiscName;
+    private Integer score;
     private UUID courseId;
     private Integer layoutId;
-    private List<PlayerRound> players;
 }
