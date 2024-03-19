@@ -11,5 +11,5 @@ public interface HandicapService {
 
     PlayerHandicap updatePlayerHandicap(final PlayerHandicap player, final Double score, final boolean manualAdjust);
 
-    Double calculateHandicapRoundScore(final Player player, final CoursePlayerRound round);
+    Integer calculateHandicapRoundScore(final Player player, final CoursePlayerRound round);
 }

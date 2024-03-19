@@ -17,7 +17,7 @@ import java.util.UUID;
 public class PlayerHandicap {
     private UUID courseId;
     private Integer layoutId;
-    private Integer handicap;
     private Boolean handicapOverride;
-    private List<Integer> scores;
+    private List<Double> ssaDeltas;
+    private Double handicap;
 }
