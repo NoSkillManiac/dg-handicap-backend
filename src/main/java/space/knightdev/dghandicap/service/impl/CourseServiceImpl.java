@@ -19,12 +19,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourse(UUID courseId) {
-        return null;
+        return courseDatabase.getCourse(courseId);
     }
 
     @Override
     public Course upsertCourse(Course course) {
-        return null;
+        return courseDatabase.upsertCourse(course);
     }
 
     @Override
@@ -33,8 +33,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public CourseLayout getLayoutAtCourse(UUID courseId, Integer layoutId) {
+        return courseDatabase.getCourseLayout(courseId, layoutId);
+    }
+
+    @Override
     public Course upsertLayout(UUID courseId, CourseLayout layout) {
-        return null;
+        return courseDatabase.upsertLayoutForCourse(courseId, layout);
     }
 
     @Override

@@ -9,6 +9,7 @@ public interface CourseService {
     Course getCourse(final UUID courseId);
     Course upsertCourse(final Course course);
     Course removeCourse(final UUID courseId);
+    CourseLayout getLayoutAtCourse(UUID courseId, Integer layoutId);
     Course upsertLayout(final UUID courseId, final CourseLayout layout);
     Course removeLayout(final UUID courseId, final Integer layoutId);
 }

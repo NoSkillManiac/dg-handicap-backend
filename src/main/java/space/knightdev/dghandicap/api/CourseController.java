@@ -10,7 +10,8 @@ import space.knightdev.dghandicap.service.CourseService;
 
 import java.util.UUID;
 
-@Controller
+@RestController
+@RequestMapping("course")
 public class CourseController {
 
     private final CourseService courseService;
@@ -20,12 +21,12 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/course/{courseId}")
+    @GetMapping("/{courseId}")
     public Course getCourse(@PathVariable("courseId") final UUID courseId) {
         return courseService.getCourse(courseId);
     }
 
-    @PostMapping("/course")
+    @PostMapping("/")
     public Course addOrUpdateCourse(@NonNull @RequestBody final Course course) {
         return courseService.upsertCourse(course);
     }
@@ -35,13 +36,19 @@ public class CourseController {
         return courseService.removeCourse(courseId);
     }
 
+    @GetMapping("/{courseId}/layout/{layoutId}")
+    public CourseLayout getLayoutAtCourse(@PathVariable("courseId") final UUID courseId,
+                                          @PathVariable("layoutId") final Integer layoutId) {
+        return courseService.getLayoutAtCourse(courseId, layoutId);
+    }
+
     @PostMapping("/{courseId}/layout")
     public Course addOrUpdateLayout(@PathVariable("courseId") final UUID courseId,
                                     @NonNull @RequestBody final CourseLayout layout) {
         return courseService.upsertLayout(courseId, layout);
     }
 
-    @DeleteMapping("/{courseId}/{layoutId}")
+    @DeleteMapping("/{courseId}/layout/{layoutId}")
     public Course removeLayout(@PathVariable("courseId") final UUID courseId,
                                @PathVariable("layoutId") final int layoutId) {
         return courseService.removeLayout(courseId, layoutId);
