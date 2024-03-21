@@ -1,20 +1,21 @@
 package space.knightdev.dghandicap.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import space.knightdev.dghandicap.dao.course.CourseLayout;
 import space.knightdev.dghandicap.dao.player.Player;
 import space.knightdev.dghandicap.dao.player.PlayerHandicap;
 import space.knightdev.dghandicap.database.CourseDatabase;
-import space.knightdev.dghandicap.database.PlayerDatabase;
 import space.knightdev.dghandicap.dto.CoursePlayerRound;
 import space.knightdev.dghandicap.service.HandicapService;
 import space.knightdev.dghandicap.service.PDGAService;
 
+@Slf4j
 @Service
 public class HandicapServiceImpl implements HandicapService {
 
-    private static final double PDGA_MULTIPLIER = 0.8;
+    private static final double PDGA_MULTIPLIER = 0.8; // This may need to be configurable.
     private static final int SCRATCH_RATING = 1000;
     private static final int STROKE_RATINGS_AVG = 10;
 
@@ -48,8 +49,13 @@ public class HandicapServiceImpl implements HandicapService {
                 .build();
 
         if (player.getPdga() != null && player.getPdga() != 0) {
+            log.info("Searching PDGA for player with PDGA number: {}", player.getPdga());
             final Integer pdgaRating = pdgaService.getPdgaRatingForPlayer(player.getPdga());
-            final Double pdgaHandicap = (SCRATCH_RATING - pdgaRating) / STROKE_RATINGS_AVG * PDGA_MULTIPLIER;
+            if (pdgaRating == null) {
+                log.warn("Unable to lookup player with PDGA number {}, returning empty handicap", player.getPdga());
+                return startingHandicap;
+            }
+            final Double pdgaHandicap = ((SCRATCH_RATING - pdgaRating) / STROKE_RATINGS_AVG) * PDGA_MULTIPLIER;
             startingHandicap.setHandicap(pdgaHandicap);
             startingHandicap.getSsaDeltas().add(pdgaHandicap);
         }
@@ -62,6 +68,8 @@ public class HandicapServiceImpl implements HandicapService {
         PlayerHandicap layoutHandicap = null;
         for (PlayerHandicap handicaps: player.getHandicap()) {
             if (round.getCourseId().equals(handicaps.getCourseId()) && round.getLayoutId().equals(handicaps.getLayoutId())) {
+                log.debug("Existing handicap at course {} found for player with playerId {}", round.getCourseId(),
+                        player.getPlayerId());
                 layoutHandicap = handicaps;
                 break;
             }
