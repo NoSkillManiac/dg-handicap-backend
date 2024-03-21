@@ -51,8 +51,9 @@ public class HandicapServiceImpl implements HandicapService {
         if (player.getPdga() != null && player.getPdga() != 0) {
             log.info("Searching PDGA for player with PDGA number: {}", player.getPdga());
             final Integer pdgaRating = pdgaService.getPdgaRatingForPlayer(player.getPdga());
-            if (pdgaRating == null) {
-                log.warn("Unable to lookup player with PDGA number {}, returning empty handicap", player.getPdga());
+            if (pdgaRating == null || pdgaRating == Integer.MIN_VALUE) {
+                log.warn("Unable to lookup player with PDGA number {} or player does not have rating, returning empty " +
+                        "handicap", player.getPdga());
                 return startingHandicap;
             }
             final Double pdgaHandicap = ((SCRATCH_RATING - pdgaRating) / STROKE_RATINGS_AVG) * PDGA_MULTIPLIER;
