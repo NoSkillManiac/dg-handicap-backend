@@ -40,7 +40,7 @@ public class HandicapServiceImpl implements HandicapService {
         return player;
     }
 
-    private PlayerHandicap buildBasePlayerHandicap(final Player player, final CoursePlayerRound round) {
+    private PlayerHandicap buildNewPlayerHandicap(final Player player, final CoursePlayerRound round) {
         final PlayerHandicap startingHandicap = PlayerHandicap.builder()
                 .handicapOverride(true)
                 .courseId(round.getCourseId())
@@ -76,7 +76,7 @@ public class HandicapServiceImpl implements HandicapService {
             }
         }
         if (layoutHandicap == null) {
-            layoutHandicap = buildBasePlayerHandicap(player, round);
+            layoutHandicap = buildNewPlayerHandicap(player, round);
         }
 
         final CourseLayout layout = courseDatabase.getCourseLayout(round.getCourseId(), round.getLayoutId());

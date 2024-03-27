@@ -5,17 +5,10 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriBuilder;
 import space.knightdev.dghandicap.service.PDGAService;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -34,7 +27,7 @@ public class PDGAServiceImpl implements PDGAService {
         } catch (IOException ioe) {
             log.error(ioe.toString());
         } catch (NullPointerException npe) {
-            log.error("No rating found for player.");
+            log.error("No rating found for player, even though the player has a PDGA number of {}", pdgaNumber);
         }
         return Integer.MIN_VALUE;
     }
