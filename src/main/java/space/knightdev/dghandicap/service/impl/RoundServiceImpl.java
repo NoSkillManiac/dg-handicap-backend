@@ -30,6 +30,8 @@ public class RoundServiceImpl implements RoundService {
         if (!newRound.getName().endsWith(".csv")) {
             throw new InvalidFileNameException(newRound.getName(), "File is not a csv.");
         }
+        // File will need to be stored on the local filestore, and retrieved after the fact
+
 
         return null;
     }
