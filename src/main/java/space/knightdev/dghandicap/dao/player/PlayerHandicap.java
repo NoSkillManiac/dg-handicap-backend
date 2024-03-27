@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PlayerHandicap {
     private UUID courseId;
-    private Integer layoutId;
+    private UUID leagueID;
     private Boolean handicapOverride;
     private List<Double> ssaDeltas;
     private Double handicap;

@@ -11,4 +11,5 @@ public class CoursePlayerRound {
     private Integer score;
     private UUID courseId;
     private Integer layoutId;
+    private UUID leagueId;
 }

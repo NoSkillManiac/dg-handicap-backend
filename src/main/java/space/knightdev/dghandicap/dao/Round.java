@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Round {
     @Id
-    private UUID roundId = UUID.randomUUID();
+    private UUID roundId;
     private long date;
     private UUID courseId;
     private Integer layoutId;

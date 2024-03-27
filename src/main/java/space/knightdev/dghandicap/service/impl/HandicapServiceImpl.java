@@ -44,7 +44,7 @@ public class HandicapServiceImpl implements HandicapService {
         final PlayerHandicap startingHandicap = PlayerHandicap.builder()
                 .handicapOverride(true)
                 .courseId(round.getCourseId())
-                .layoutId(round.getLayoutId())
+                .leagueID(round.getLeagueId())
                 .handicap(0d)
                 .build();
 
@@ -68,7 +68,7 @@ public class HandicapServiceImpl implements HandicapService {
     public Integer calculateHandicapRoundScore(final Player player, final CoursePlayerRound round) {
         PlayerHandicap layoutHandicap = null;
         for (PlayerHandicap handicaps: player.getHandicap()) {
-            if (round.getCourseId().equals(handicaps.getCourseId()) && round.getLayoutId().equals(handicaps.getLayoutId())) {
+            if (round.getCourseId().equals(handicaps.getCourseId()) && round.getLeagueId().equals(handicaps.getLeagueID())) {
                 log.debug("Existing handicap at course {} found for player with playerId {}", round.getCourseId(),
                         player.getPlayerId());
                 layoutHandicap = handicaps;
