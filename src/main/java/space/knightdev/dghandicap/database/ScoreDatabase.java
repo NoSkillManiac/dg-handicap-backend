@@ -7,4 +7,6 @@ public class ScoreDatabase {
     private static final String DATABASE_NAME = "score";
 
 
+
+
 }
