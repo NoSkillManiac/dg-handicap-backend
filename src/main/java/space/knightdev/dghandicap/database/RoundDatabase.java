@@ -1,38 +1,49 @@
 package space.knightdev.dghandicap.database;
 
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.Collection;
+import com.couchbase.client.java.json.JsonArray;
+import com.couchbase.client.java.query.QueryOptions;
+import com.couchbase.client.java.query.QueryScanConsistency;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import space.knightdev.dghandicap.config.CouchbaseConfig;
 import space.knightdev.dghandicap.dao.Round;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
+@Repository
 public class RoundDatabase {
 
-    private final MongoTemplate mongoTemplate;
-    private static final String ROUND_COLLECTION = "round";
+    private Cluster cluster;
+    private Collection roundDB;
+    private CouchbaseConfig config;
 
-    public RoundDatabase(final MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
+    @Autowired
+    public RoundDatabase(final Cluster cluster, final Bucket bucket, final CouchbaseConfig config) {
+        this.cluster = cluster;
+        this.roundDB = bucket.scope("dg-backend").collection("round");
+        this.config = config;
     }
 
     public Round getRound(final UUID roundId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(roundId));
-        return mongoTemplate.findOne(query, Round.class, ROUND_COLLECTION);
+        return roundDB.get(roundId.toString())
+                .contentAs(Round.class);
     }
 
     public List<Round> getRounds(final UUID courseId, final Integer layoutId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("courseId").is(courseId));
-        query.addCriteria(Criteria.where("layoutId").is(layoutId));
-        return mongoTemplate.find(query,Round.class, ROUND_COLLECTION);
+        String stmt = "SELECT * FROM `" + config.getBucketName() + "`.`dg-backend`.`round`" +
+                " WHERE courseId=$1 AND layoutId=$2";
+        return cluster.query(stmt, QueryOptions.queryOptions()
+                        .parameters(JsonArray.from(courseId, layoutId))
+                        .scanConsistency(QueryScanConsistency.REQUEST_PLUS))
+                .rowsAs(Round.class);
     }
 
-
-
-
+    public Round addRound(final Round round) {
+        roundDB.upsert(round.getRoundId().toString(), round);
+        return round;
+    }
 }

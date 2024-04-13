@@ -30,14 +30,14 @@ public class HandicapServiceImpl implements HandicapService {
     }
 
     @Override
-    public PlayerHandicap updatePlayerHandicap(final PlayerHandicap player, final Double ssaDelta, final boolean manualAdjust) {
-        player.getSsaDeltas().add(ssaDelta);
+    public PlayerHandicap updatePlayerHandicap(final PlayerHandicap playerHandicap, final Double ssaDelta, final boolean manualAdjust) {
+        playerHandicap.getSsaDeltas().add(ssaDelta);
         Double deltaTotal = 0d;
-        for (Double delta : player.getSsaDeltas()) {
+        for (Double delta : playerHandicap.getSsaDeltas()) {
             deltaTotal += delta;
         }
-        player.setHandicap(deltaTotal / player.getSsaDeltas().size());
-        return player;
+        playerHandicap.setHandicap(deltaTotal / playerHandicap.getSsaDeltas().size());
+        return playerHandicap;
     }
 
     private PlayerHandicap buildNewPlayerHandicap(final Player player, final CoursePlayerRound round) {
@@ -79,7 +79,7 @@ public class HandicapServiceImpl implements HandicapService {
             layoutHandicap = buildNewPlayerHandicap(player, round);
         }
 
-        final CourseLayout layout = courseDatabase.getCourseLayout(round.getCourseId(), round.getLayoutId());
+        final CourseLayout layout = courseDatabase.getCourseLayout(round.getCourseId(), round.getLayoutId()).get(0);
         final double roundResult = round.getScore() + layoutHandicap.getHandicap();
         final Double ssaDelta = layout.getSsa() - round.getScore();
 

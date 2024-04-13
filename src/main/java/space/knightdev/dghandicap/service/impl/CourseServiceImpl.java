@@ -6,6 +6,7 @@ import space.knightdev.dghandicap.dao.course.CourseLayout;
 import space.knightdev.dghandicap.database.CourseDatabase;
 import space.knightdev.dghandicap.service.CourseService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseLayout getLayoutAtCourse(UUID courseId, Integer layoutId) {
+    public List<CourseLayout> getLayoutAtCourse(UUID courseId, Integer layoutId) {
         return courseDatabase.getCourseLayout(courseId, layoutId);
     }
 

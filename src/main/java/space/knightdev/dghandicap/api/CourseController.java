@@ -39,7 +39,7 @@ public class CourseController {
     @GetMapping("/{courseId}/layout/{layoutId}")
     public CourseLayout getLayoutAtCourse(@PathVariable("courseId") final UUID courseId,
                                           @PathVariable("layoutId") final Integer layoutId) {
-        return courseService.getLayoutAtCourse(courseId, layoutId);
+        return courseService.getLayoutAtCourse(courseId, layoutId).get(0);
     }
 
     @PostMapping("/{courseId}/layout")

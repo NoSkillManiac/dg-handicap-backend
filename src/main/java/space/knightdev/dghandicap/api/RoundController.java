@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import space.knightdev.dghandicap.dao.Round;
+import space.knightdev.dghandicap.dto.LeagueRound;
 import space.knightdev.dghandicap.dto.RoundDetail;
 import space.knightdev.dghandicap.service.RoundService;
 
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,8 +22,8 @@ public class RoundController {
     }
 
     @PostMapping("/round")
-    public Round addRound(@RequestBody final File uDiscRound) {
-        return roundService.addRound(uDiscRound);
+    public Round addRound(@RequestBody final LeagueRound leagueRound) {
+        return roundService.addRound(leagueRound);
     }
 
     @PutMapping("/round")

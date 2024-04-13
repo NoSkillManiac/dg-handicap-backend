@@ -7,6 +7,7 @@ class PDGAServiceImplSpec extends Specification {
     def "Expect PDGA Player rating to be returned from PDGA website"() {
         when:
         PDGAServiceImpl service = new PDGAServiceImpl()
+        service.pdgaPlayerUri = "https://www.pdga.com/player/"
         int pdgaRating = service.getPdgaRatingForPlayer(playerNumber)
 
         then:
@@ -14,8 +15,10 @@ class PDGAServiceImplSpec extends Specification {
 
         where:
         playerNumber || expectedRating
-        134711       || 939
-        127708       || 937
+        -1           || Integer.MIN_VALUE
+        1            || Integer.MIN_VALUE
+        134711       || 946
+        127708       || 944
         273026       || Integer.MIN_VALUE
     }
 }

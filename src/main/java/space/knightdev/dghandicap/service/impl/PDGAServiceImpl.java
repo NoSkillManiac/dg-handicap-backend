@@ -5,6 +5,8 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import space.knightdev.dghandicap.service.PDGAService;
 
@@ -14,12 +16,13 @@ import java.io.IOException;
 @Service
 public class PDGAServiceImpl implements PDGAService {
 
-    private static final String PDGA_PLAYER_URI = "https://www.pdga.com/player/";
+    @Value("pdga.player.lookup:https://www.pdga.com/player/")
+    private String pdgaPlayerUri;
 
     @Override
     public Integer getPdgaRatingForPlayer(final Integer pdgaNumber) {
         try {
-            Connection session = Jsoup.connect(PDGA_PLAYER_URI + pdgaNumber);
+            Connection session = Jsoup.connect(pdgaPlayerUri + pdgaNumber);
             Document httpResponse = session.get();
             Element documentBody = httpResponse.body();
             Element ratingElement = documentBody.getElementsByClass("current-rating").first();

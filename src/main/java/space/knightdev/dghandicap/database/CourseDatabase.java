@@ -1,50 +1,53 @@
 package space.knightdev.dghandicap.database;
 
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.Collection;
+import com.couchbase.client.java.json.JsonArray;
+import com.couchbase.client.java.query.QueryOptions;
+import com.couchbase.client.java.query.QueryScanConsistency;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.ReplaceOptions;
-import org.springframework.data.mongodb.core.query.BasicUpdate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.UpdateDefinition;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import space.knightdev.dghandicap.config.CouchbaseConfig;
 import space.knightdev.dghandicap.dao.course.Course;
 import space.knightdev.dghandicap.dao.course.CourseLayout;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@Repository
 public class CourseDatabase {
 
-    private final MongoTemplate mongoTemplate;
     private static final String COURSE_COLLECTION = "course";
 
+    private Cluster cluster;
+    private Collection courseDb;
+    private CouchbaseConfig config;
+
     @Autowired
-    public CourseDatabase(final MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
+    public CourseDatabase(final Cluster cluster, final Bucket bucket, final CouchbaseConfig config) {
+        this.cluster = cluster;
+        this.courseDb = bucket.scope("dg-backend").collection(COURSE_COLLECTION);
+        this.config = config;
     }
 
-    public CourseLayout getCourseLayout(final UUID courseId, final Integer layoutId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(courseId));
-        query.addCriteria(Criteria.where("_id").is(layoutId));
-        return mongoTemplate.findOne(query, CourseLayout.class, COURSE_COLLECTION);
+    public List<CourseLayout> getCourseLayout(final UUID courseId, final Integer layoutId) {
+        String stmt = "SELECT * FROM `" + config.getBucketName() + "`.`dg-backend`.`" + COURSE_COLLECTION +
+                "` WHERE courseId=$1 AND layoutId=$2";
+        return cluster.query(stmt, QueryOptions.queryOptions()
+                        .parameters(JsonArray.from(courseId, layoutId))
+                        .scanConsistency(QueryScanConsistency.REQUEST_PLUS))
+                .rowsAs(CourseLayout.class);
     }
 
     public Course getCourse(final UUID courseId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(courseId));
-        return mongoTemplate.findOne(query, Course.class, COURSE_COLLECTION);
+        return courseDb.get(courseId.toString()).contentAs(Course.class);
     }
 
     public Course upsertCourse(final Course course) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(course.getCourseId()));
-
-        mongoTemplate.replace(query, course, ReplaceOptions.replaceOptions().upsert() , COURSE_COLLECTION);
+        courseDb.upsert(course.getCourseId().toString(), course);
         return course;
     }
 
