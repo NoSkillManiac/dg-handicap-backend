@@ -41,4 +41,9 @@ public class RoundDatabase {
                         .scanConsistency(QueryScanConsistency.REQUEST_PLUS))
                 .rowsAs(Round.class);
     }
+
+    public Round addRound(final Round round) {
+        roundDB.upsert(round.getRoundId().toString(), round);
+        return round;
+    }
 }

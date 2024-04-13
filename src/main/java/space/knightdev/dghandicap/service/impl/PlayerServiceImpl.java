@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import space.knightdev.dghandicap.dao.player.Player;
 import space.knightdev.dghandicap.database.PlayerDatabase;
+import space.knightdev.dghandicap.dto.RoundDetail;
 import space.knightdev.dghandicap.service.PlayerService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -48,7 +50,17 @@ public class PlayerServiceImpl implements PlayerService {
         return playerDatabase.deletePlayer(playerId);
     }
 
-    final String[] splitUDiscName(final String uDiscName) {
+    @Override
+    public List<UUID> createPlayerRound(final RoundDetail roundDetail) {
+        return new ArrayList<>();
+    }
+
+    private boolean playerExists(final String uDiscName) {
+        return false;
+    }
+
+
+    private String[] splitUDiscName(final String uDiscName) {
         String modifiedName = uDiscName.replace("\"", "");
         modifiedName = modifiedName.trim();
         String[] nameSplit = modifiedName.split(" ");
