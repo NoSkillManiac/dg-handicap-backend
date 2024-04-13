@@ -1,6 +1,7 @@
 package space.knightdev.dghandicap.service;
 
 import space.knightdev.dghandicap.dao.player.Player;
+import space.knightdev.dghandicap.dto.PlayerRound;
 import space.knightdev.dghandicap.dto.RoundDetail;
 
 import java.util.List;
@@ -8,14 +9,16 @@ import java.util.UUID;
 
 public interface PlayerService {
 
-    public Player createPlayer(final String uDiscName, final Integer pdgaNumber);
+    Player createPlayer(final String firstName, final String lastName, final String uDiscName, final Integer pdgaNumber);
 
-    public Player getPlayer(final UUID playerId);
+    Player createPlayerFromUDisc(final String uDiscName, final Integer pdgaNumber);
 
-    public Player updatePlayer(final Player player);
+    Player getPlayer(final UUID playerId);
 
-    public UUID deletePlayer(final UUID playerId);
+    Player updatePlayer(final Player player);
 
-    public List<UUID> createPlayerRound(final RoundDetail roundDetail);
+    UUID deletePlayer(final UUID playerId);
+
+    List<PlayerRound> createPlayerRound(final RoundDetail roundDetail);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import space.knightdev.dghandicap.dao.CSVEntry;
 import space.knightdev.dghandicap.dao.Round;
 import space.knightdev.dghandicap.database.RoundDatabase;
+import space.knightdev.dghandicap.dto.CoursePlayerRound;
 import space.knightdev.dghandicap.dto.LeagueRound;
 import space.knightdev.dghandicap.dto.PlayerRound;
 import space.knightdev.dghandicap.dto.RoundDetail;
@@ -52,7 +53,7 @@ public class RoundServiceImpl implements RoundService {
                 .build();
 
         //Sending the scores off to playerService for player and handicap management, return a list of PlayerIds
-        List<UUID> playersInRound = playerService.createPlayerRound(roundDetail);
+        List<PlayerRound> playersInRound = playerService.createPlayerRound(roundDetail);
 
         return roundDatabase.addRound(Round.builder()
                         .courseId(leagueRound.getCourseId())

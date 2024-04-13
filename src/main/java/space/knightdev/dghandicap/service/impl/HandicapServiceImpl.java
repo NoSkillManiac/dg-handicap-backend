@@ -8,6 +8,7 @@ import space.knightdev.dghandicap.dao.player.Player;
 import space.knightdev.dghandicap.dao.player.PlayerHandicap;
 import space.knightdev.dghandicap.database.CourseDatabase;
 import space.knightdev.dghandicap.dto.CoursePlayerRound;
+import space.knightdev.dghandicap.dto.PlayerRound;
 import space.knightdev.dghandicap.service.HandicapService;
 import space.knightdev.dghandicap.service.PDGAService;
 
@@ -48,7 +49,7 @@ public class HandicapServiceImpl implements HandicapService {
                 .handicap(0d)
                 .build();
 
-        if (player.getPdga() != null && player.getPdga() != 0) {
+        if (player.getPdga() != null && player.getPdga() > 0) {
             log.info("Searching PDGA for player with PDGA number: {}", player.getPdga());
             final Integer pdgaRating = pdgaService.getPdgaRatingForPlayer(player.getPdga());
             if (pdgaRating == null || pdgaRating == Integer.MIN_VALUE) {
@@ -65,7 +66,7 @@ public class HandicapServiceImpl implements HandicapService {
     }
 
     @Override
-    public Integer calculateHandicapRoundScore(final Player player, final CoursePlayerRound round) {
+    public PlayerRound calculateHandicapRoundScore(final Player player, final CoursePlayerRound round) {
         PlayerHandicap layoutHandicap = null;
         for (PlayerHandicap handicaps: player.getHandicap()) {
             if (round.getCourseId().equals(handicaps.getCourseId()) && round.getLeagueId().equals(handicaps.getLeagueID())) {
@@ -85,6 +86,11 @@ public class HandicapServiceImpl implements HandicapService {
 
         updatePlayerHandicap(layoutHandicap, ssaDelta, false);
 
-        return (int)roundResult;
+        return PlayerRound.builder()
+                .playerId(player.getPlayerId())
+                .rawRoundScore(round.getScore())
+                .handicapRoundScore((int) roundResult)
+                .uDiscName(player.getUDiscName())
+                .build();
     }
 }

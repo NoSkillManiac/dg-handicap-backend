@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import space.knightdev.dghandicap.dto.PlayerRound;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,5 +24,5 @@ public class Round {
     private UUID courseId;
     private UUID leagueId;
     private Integer layoutId;
-    private List<UUID> players;
+    private List<PlayerRound> players;
 }

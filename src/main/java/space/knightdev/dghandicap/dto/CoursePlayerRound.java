@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class CoursePlayerRound {
     private UUID playerId;
