@@ -91,6 +91,8 @@ public class HandicapServiceImpl implements HandicapService {
                 .rawRoundScore(round.getScore())
                 .handicapRoundScore((int) roundResult)
                 .uDiscName(player.getUDiscName())
+                .firstName(player.getFirstName())
+                .lastName(player.getLastName())
                 .build();
     }
 }
