@@ -30,12 +30,11 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player createPlayer(final String firstName, final String lastName, final String uDiscName, final Integer pdgaNumber) {
-        String[] nameSplit = splitUDiscName(uDiscName);
         Player newPlayer = Player.builder()
                 .playerId(UUID.randomUUID())
                 .uDiscName(uDiscName)
-                .firstName(nameSplit[0])
-                .lastName(nameSplit[1])
+                .firstName(firstName)
+                .lastName(lastName)
                 .pdga(pdgaNumber)
                 .handicap(new ArrayList<>())
                 .build();

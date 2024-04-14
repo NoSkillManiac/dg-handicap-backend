@@ -10,6 +10,8 @@ import java.util.UUID;
 public class PlayerRound {
     private UUID playerId;
     private String uDiscName;
+    private String firstName;
+    private String lastName;
     private Integer rawRoundScore;
     private Integer handicapRoundScore;
 }
