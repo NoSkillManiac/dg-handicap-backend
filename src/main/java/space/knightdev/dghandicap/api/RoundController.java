@@ -8,6 +8,7 @@ import space.knightdev.dghandicap.dto.LeagueRound;
 import space.knightdev.dghandicap.dto.RoundDetail;
 import space.knightdev.dghandicap.service.RoundService;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class RoundController {
     }
 
     @PostMapping("/round")
-    public Round addRound(@RequestBody final LeagueRound leagueRound) {
+    public Round addRound(@RequestBody final LeagueRound leagueRound) throws FileNotFoundException {
         return roundService.addRound(leagueRound);
     }
 
@@ -39,6 +40,6 @@ public class RoundController {
     @GetMapping("/round/{courseId}/{layoutId}")
     public List<Round> getRounds(@PathVariable("courseId") final UUID courseId,
                                  @PathVariable("layoutId") final Integer layoutId) {
-        return roundService.getRounds(courseId,layoutId);
+        return roundService.getRounds(courseId, layoutId);
     }
 }
