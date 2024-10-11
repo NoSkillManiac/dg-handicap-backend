@@ -3,7 +3,6 @@ package space.knightdev.dghandicap.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import space.knightdev.dghandicap.dao.player.Player;
-import space.knightdev.dghandicap.dao.player.PlayerHandicap;
 import space.knightdev.dghandicap.database.PlayerDatabase;
 import space.knightdev.dghandicap.dto.CoursePlayerRound;
 import space.knightdev.dghandicap.dto.PlayerRound;
@@ -14,7 +13,6 @@ import space.knightdev.dghandicap.service.PlayerService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -53,7 +51,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player updatePlayer(Player player) {
+    public Player upsertPlayer(Player player) {
         return playerDatabase.upsertPlayer(player);
     }
 
@@ -90,7 +88,8 @@ public class PlayerServiceImpl implements PlayerService {
         modifiedName = modifiedName.trim();
         String[] nameSplit = modifiedName.split(" ");
         return switch (nameSplit.length) {
-            case 0, 1 -> new String[]{modifiedName, "nameSplitFailed"};
+            case 0 -> new String[]{"no name" , "nameSplitFailed"};
+            case 1 -> new String[]{modifiedName, "nameSplitFailed"};
             case 2 -> nameSplit;
             default -> new String[]{nameSplit[0], String.join(" ", nameSplit)};
         };

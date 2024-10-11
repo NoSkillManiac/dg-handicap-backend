@@ -38,6 +38,7 @@ public class HandicapServiceImpl implements HandicapService {
             deltaTotal += delta;
         }
         playerHandicap.setHandicap(deltaTotal / playerHandicap.getSsaDeltas().size());
+        playerHandicap.setHandicapOverride(manualAdjust);
         return playerHandicap;
     }
 

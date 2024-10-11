@@ -15,7 +15,7 @@ public interface PlayerService {
 
     Player getPlayer(final UUID playerId);
 
-    Player updatePlayer(final Player player);
+    Player upsertPlayer(final Player player);
 
     UUID deletePlayer(final UUID playerId);
 

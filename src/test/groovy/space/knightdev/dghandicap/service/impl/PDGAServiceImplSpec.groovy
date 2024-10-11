@@ -17,8 +17,11 @@ class PDGAServiceImplSpec extends Specification {
         playerNumber || expectedRating
         -1           || Integer.MIN_VALUE
         1            || Integer.MIN_VALUE
-        134711       || 946
-        127708       || 944
+        127708       || 924
+        134240       || 983
+        134417       || 956
+        134711       || 953
+        156823       || 967
         273026       || Integer.MIN_VALUE
     }
 }
